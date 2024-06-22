@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta ch****t="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>喵喵云 - 服务器出租</title>
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* 全局样式 */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* 头部样式 */
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 1rem 0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        nav ul {
+            list-style-type: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+        
+        nav li {
+            margin-left: 1.5rem;
+        }
+        
+        nav a {
+            color: #fff;
+            text-decoration: none;
+        }
+        
+        /* 背景图片样式 */
+        .background-image {
+            height: 400px;
+            background-image: url('background.jpg');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            z-index: -1;
+        }
+        
+        /* 产品卡片样式 */
+        .server {
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .server:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, 
+                #ff6b6b,
+                #ffa500,
+                #ffff00,
+                #00ff00,
+                #00ffff,
+                #0000ff,
+                #ff00ff);
+            background-size: 200% 200%;
+            animation: colorGradient 10s ease infinite;
+            z-index: -1;
+            opacity: 0.1;
+            transition: opacity 0.3s ease;
+            border-radius: 10px;
+        }
+        
+        @keyframes colorGradient {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: #fff;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #45a049;
+        }
+        
+        /* 页脚样式 */
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 1rem 0;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                text-align: center;
+            }
+        
+            .logo {
+                margin-bottom: 1rem;
+            }
+        
+            nav li {
+                margin: 0.5rem 1rem;
+            }
+        
+            .server {
+                width: 100%;
+                box-sizing: border-box;
+            }
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        /* 页头样式 */
+        header {
+            background: linear-gradient(45deg, #ff6b6b, #ffa500, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff);
+            background-size: 400% 400%;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+            position: relative;
+            overflow: hidden;
+            animation: gradientBackground 15s ease infinite;
+        }
+        
+        @keyframes gradientBackground {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            margin-right: auto;
+        }
+        
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+        
+        nav ul li {
+            margin: 0 10px;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: #fff;
+            transition: color 0.3s ease;
+        }
+        
+        nav ul li a:hover {
+            color: #ffcc80;
+        }
+        
+        /* 背景图片 */
+        .background-image {
+            background-image: url('background.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            height: 300px; /* 调整高度以适应实际需求 */
+        }
+        
+        /* 产品样式 */
+        .server {
+            background-color: #fff;
+            padding: 20px;
+            margin: 10px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        
+        .server:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .server:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #ff6b6b, #ffa500, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff);
+            background-size: 200% 200%;
+            animation: colorGradient 10s ease infinite;
+            z-index: -1;
+            opacity: 0.1;
+            transition: opacity 0.3s ease;
+        }
+        
+        .server:hover:before {
+            opacity: 0.5;
+        }
+        
+        .server h2 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 10px;
+            transition: color 0.3s ease;
+        }
+        
+        .server:hover h2 {
+            color: #ff8c00;
+        }
+        
+        .server p {
+            color: #666;
+            font-size: 16px;
+            line-height: 1.6;
+            transition: color 0.3s ease;
+        }
+        
+        .server:hover p {
+            color: #444;
+        }
+        
+        /* 按钮样式 */
+        .btn {
+            display: inline-block;
+            background-color: #ff8c00;
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #ff6b6b, #ffa500, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff);
+            background-size: 200% 200%;
+            animation: colorGradient 5s ease infinite;
+            z-index: -1;
+            opacity: 0.1;
+        }
+        
+        .btn:hover {
+            background-color: #e68a00;
+        }
+        
+        .btn:hover:before {
+            animation: none; /* Stop animation on hover */
+        }
+        
+        /* 页脚样式 */
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+        }
+        
+        
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">喵喵云</div>
+            <nav>
+                <ul>
+                    <li><a href="#">主页</a></li>
+                    <li><a href="#">产品</a></li>
+                    <li><a href="#">联系我们</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="background-image"></div>
+
+    <div class="container">
+        <div class="server">
+            <h2>基础型服务器</h2>
+            <p>适合个人或小型企业使用的基础服务器方案。</p>
+            <a href="#" class="btn">了解更多</a>
+        </div>
+
+        <div class="server">
+            <h2>企业型服务器</h2>
+            <p>针对企业级用户设计的高性能服务器方案。</p>
+            <a href="#" class="btn">了解更多</a>
+        </div>
+
+        <div class="server">
+            <h2>定制型服务器</h2>
+            <p>根据客户具体需求进行定制的服务器方案。</p>
+            <a href="#" class="btn">了解更多</a>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 喵喵云 - 服务器出租服务。保留所有权利。</p>
+        </div>
+    </footer>
+</body>
+
+</html>
