@@ -1,79 +1,152 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>产品介绍</title>
+    <title>简单实时聊天</title>
     <style>
-        /* 这里可以添加m.html页面的CSS样式 */
+        #messages {
+            height: 300px;
+            overflow: auto;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+    </style>
+
+    <style>
+        /* 在 styles.css 中添加以下内容 */
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
         }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 2rem;
+        
+        #chat-container {
+            max-width: 500px;
+            margin: 20px auto;
+            border: 1px solid #ddd;
+            padding: 20px;
         }
-
-        h1 {
-            text-align: center;
-            margin-bottom: 2rem;
+        
+        #chat-messages {
+            height: 400px;
+            overflow-y: scroll;
+            margin-bottom: 20px;
         }
-
-        .product-info {
+        
+        #message-form {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 2rem;
         }
-
-        .product-info img {
-            max-width: 300px;
-            margin-right: 2rem;
-        }
-
-        .product-details {
+        
+        #message-input {
             flex: 1;
+            margin-right: 10px;
         }
-
-        .product-details h2 {
-            margin-top: 0;
+        
+        button {
+            padding: 8px 16px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
         }
-
-        .product-details p {
-            line-height: 1.5;
-        }
-
-        .btn {
-            display: inline-block;
-            background-color: #4CAF50;
-            color: #fff;
-            text-decoration: none;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-        }
-
-        .btn:hover {
-            background-color: #45a049;
+        
+        button:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
+
 <body>
-    <div class="container">
-        <h1>产品介绍</h1>
-        <div class="product-info">
-            <img src="background.jpg" alt="产品图片">
-            <div class="product-details">
-                <h2>高性能服务器</h2>
-                <p>我们提供高性能、可靠性强的服务器产品,适用于各种业务场景。无论是中小企业还是大型机构,都能找到适合自己需求的解决方案。</p>
-                <p>产品采用先进的处理器和存储技术,确保您的业务稳定运行。同时我们还提供专业的技术支持,助您轻松上手。</p>
-                <a href="#" class="btn">立即购买</a>
-            </div>
-        </div>
-    </div>
+    <h1>实时聊天</h1>
+    <div id="messages"></div>
+    <form id="messageForm">
+        <input type="text" id="messageInput" placeholder="输入消息">
+        <button type="submit">发送</button>
+    </form>
+    <script>
+        const messagesContainer = document.getElementById('messages');
+        const messageForm = document.getElementById('messageForm');
+        const messageInput = document.getElementById('messageInput');
+        const socket = new WebSocket(`ws://localhost:${port}`);
+        
+        socket.addEventListener('message', (event) => {
+            const message = document.createElement('div');
+            message.textContent = event.data;
+            messagesContainer.appendChild(message);
+        });
+        
+        messageForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            const message = messageInput.value.trim();
+            if (message) {
+                socket.send(`User: ${message}`);
+                messageInput.value = '';
+            }
+        });
+        
+        socket.addEventListener('open', () => {
+            console.log('WebSocket 连接已建立');
+        });
+        
+        socket.addEventListener('error', (error) => {
+            console.error('WebSocket 错误:', error);
+        });
+        
+        socket.addEventListener('close', (event) => {
+            console.log('WebSocket 连接已关闭:', event);
+        });
+    </script>
+
+    <script>
+        const express = require('express');
+        const fs = require('fs');
+        const app = express();
+        const port = 3000;
+        
+        app.use(express.json());
+        
+        // 实时聊天的处理逻辑
+        function readMessages(file) {
+            return new Promise((resolve, reject) => {
+                fs.readFile(file, 'utf8', (err, data) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(data);
+                    }
+                });
+            });
+        }
+        
+        function appendMessage(file, message) {
+            fs.appendFile(file, message + '\n', (err) => {
+                if (err) {
+                    console.error('写入消息时发生错误:', err);
+                } else {
+                    console.log('消息已写入。');
+                }
+            });
+        }
+        
+        app.get('/messages', (req, res) => {
+            readMessages('./messages.txt')
+                .then((messages) => res.send(messages))
+                .catch((err) => res.status(500).send(err.message));
+        });
+        
+        app.post('/messages', (req, res) => {
+            const message = req.body.message;
+            const username = req.body.username;
+            appendMessage('./messages.txt', `${username}: ${message}`);
+            res.send('消息已发送');
+        });
+        
+        app.listen(port, () => {
+            console.log(`服务器正在运行在 http://localhost:${port}`);
+        });
+    </script>
 </body>
+
 </html>
